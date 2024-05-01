@@ -25,7 +25,7 @@ const oklchToHex = (str) => {
 
 // https://astro.build/config
 export default defineConfig({
-  site: "http://localhost:4321",
+  site: "https://ikshvaku01.vercel.app/",
   base: "/",
   trailingSlash: "always",
   integrations: [
