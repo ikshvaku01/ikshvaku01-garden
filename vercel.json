@@ -1,0 +1,8 @@
+{
+    "build": {
+      "ignore": [
+        "src/content/posts/docs-folder/WEBSITE-SOLUTION-CLUSTER"
+      ]
+    }
+  }
+  
