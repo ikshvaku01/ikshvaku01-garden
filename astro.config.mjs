@@ -12,6 +12,13 @@ import svelte from "@astrojs/svelte"
 import swup from '@swup/astro'
 import sitemap from '@astrojs/sitemap'
 import expressiveCode from "astro-expressive-code"
+import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs"
+import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs"
+import remarkDirective from "remark-directive" /* Handle directives */
+import remarkDirectiveRehype from 'remark-directive-rehype' /* Pass directives to rehype */
+import rehypeComponents from "rehype-components"; /* Render the custom directive content */
+import {parseDirectiveNode} from "./src/plugins/remark-directive-rehype.js";
+import vercel from '@astrojs/vercel/static';
 
 const oklchToHex = (str) => {
   const DEFAULT_HUE = 250
@@ -56,10 +63,20 @@ export default defineConfig({
     expressiveCode(),
   ],
   markdown: {
-    remarkPlugins: [remarkMath, remarkReadingTime],
+    remarkPlugins: [remarkMath, remarkReadingTime, remarkDirective, parseDirectiveNode],
     rehypePlugins: [
       rehypeKatex,
       rehypeSlug,
+      [rehypeComponents, {
+        components: {
+          github: GithubCardComponent,
+          note: (x, y) => AdmonitionComponent(x, y, "note"),
+          tip: (x, y) => AdmonitionComponent(x, y, "tip"),
+          important: (x, y) => AdmonitionComponent(x, y, "important"),
+          caution: (x, y) => AdmonitionComponent(x, y, "caution"),
+          warning: (x, y) => AdmonitionComponent(x, y, "warning"),
+        },
+      }],
       [
         rehypeAutolinkHeadings,
         {
@@ -107,4 +124,9 @@ export default defineConfig({
       },
     },
   },
+  output: 'static',
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+    speedInsights: { enabled: true },
+  }),
 })

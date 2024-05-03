@@ -1,3 +1,4 @@
 [submodule "src/content/posts/docs-folder"]
         path = src/content/posts/docs-folder
         url = https://github.com/ikshvaku01/ikshvaku01-garden-docs.git
+        branch = main
