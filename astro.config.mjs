@@ -18,7 +18,6 @@ import remarkDirective from "remark-directive" /* Handle directives */
 import remarkDirectiveRehype from 'remark-directive-rehype' /* Pass directives to rehype */
 import rehypeComponents from "rehype-components"; /* Render the custom directive content */
 import {parseDirectiveNode} from "./src/plugins/remark-directive-rehype.js";
-import vercel from '@astrojs/vercel/static';
 
 const oklchToHex = (str) => {
   const DEFAULT_HUE = 250
@@ -124,9 +123,4 @@ export default defineConfig({
       },
     },
   },
-  output: 'static',
-  adapter: vercel({
-    webAnalytics: { enabled: true },
-    speedInsights: { enabled: true },
-  }),
 })
